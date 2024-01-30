@@ -1,0 +1,54 @@
+def init_board():
+    return [' ' for _ in range(9)]
+
+def print_board(board):
+    for i in range(0, 9, 3):
+        print(board[i], '|', board[i+1], '|', board[i+2])
+        if i < 6:
+            print('---------')
+
+def make_move(board, player, position):
+    if board[position] == ' ':
+        board[position] = player
+    else:
+        print('Недопустимый ход. Попробуйте еще раз.')
+
+def check_win(board):
+    # Проверяем все возможные комбинации для победы
+    winning_combinations = [
+        (0, 1, 2), (3, 4, 5), (6, 7, 8),  # Горизонтали
+        (0, 3, 6), (1, 4, 7), (2, 5, 8),  # Вертикали
+        (0, 4, 8), (2, 4, 6)              # Диагонали
+    ]
+    for combination in winning_combinations:
+        a, b, c = combination
+        if board[a] == board[b] == board[c] != ' ':
+            return True
+    return False
+
+def is_board_full(board):
+    return ' ' not in board
+
+def play_game():
+    board = init_board()
+    current_player = 'X'
+
+    while True:
+        print_board(board)
+
+        position = int(input(f"Игрок {current_player}, введите номер ячейки (0-8): "))
+        make_move(board, current_player, position)
+
+        if check_win(board):
+            print_board(board)
+            print(f"Игрок {current_player} победил!")
+            break
+
+        if is_board_full(board):
+            print_board(board)
+            print("Ничья!")
+            break
+
+        current_player = 'O' if current_player == 'X' else 'X'
+
+play_game()
