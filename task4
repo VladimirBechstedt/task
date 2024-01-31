@@ -1,0 +1,23 @@
+import math
+
+# Функция для расчета среднего значения массива
+def average(arr):
+    return sum(arr) / len(arr)
+
+# Функция для расчета корреляции Пирсона
+def pearson_correlation(x, y):
+    n = len(x)
+    avg_x = average(x)
+    avg_y = average(y)
+
+    numerator = sum((x[i] - avg_x) * (y[i] - avg_y) for i in range(n))
+    denominator = math.sqrt(sum((x[i] - avg_x) ** 2 for i in range(n))) * math.sqrt(sum((y[i] - avg_y) ** 2 for i in range(n)))
+
+    return numerator / denominator
+
+# Пример использования
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+correlation = pearson_correlation(x, y)
+print("Корреляция Пирсона:", correlation)
